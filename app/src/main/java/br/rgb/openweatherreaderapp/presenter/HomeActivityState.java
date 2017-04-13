@@ -55,16 +55,16 @@ public class HomeActivityState implements Parcelable {
     public enum PresentationValue {
         C {
             @Override
-            public double convert(double temp) {
-                return temp; // C is the default
+            public int convert(double temp) {
+                return (int) temp; // C is the default
             }
         }, F {
             @Override
-            public double convert(double temp) {
+            public int convert(double temp) {
                 return (int) (temp * 1.8 + 32); // from: http://www.rapidtables.com/convert/temperature/how-celsius-to-fahrenheit.htm
             }
         };
 
-        public abstract double convert(double maxDay);
+        public abstract int convert(double maxDay);
     }
 }

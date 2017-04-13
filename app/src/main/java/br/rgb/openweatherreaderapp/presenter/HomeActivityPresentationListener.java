@@ -38,14 +38,13 @@ public class HomeActivityPresentationListener implements HomeActivityPresentatio
     }
 
     private void loadState() {
-        if(!worker.hasResults()) {
+        if(!worker.hasResults())
             return;
-        }
 
         if(state.viewPresentationData == HomeActivityState.VIEW_LIST)
             view.displayListPerspective(worker.data(), state.viewPresentationValues);
         else
-            view.displayMapPerspective(worker.data(), state.viewPresentationValues);
+            view.displayMapPerspective(worker.from(), worker.data(), state.viewPresentationValues);
 
         onPrepareOptionsMenu(view.getMenu());
     }

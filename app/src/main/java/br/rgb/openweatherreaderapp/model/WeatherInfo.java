@@ -12,6 +12,7 @@ public class WeatherInfo implements Parcelable {
     public double minDay, maxDay;
     public double lon;
     public double lat;
+    public String weatherIcon;
 
     public WeatherInfo(){}
 
@@ -23,6 +24,7 @@ public class WeatherInfo implements Parcelable {
         maxDay = in.readDouble();
         lat = in.readDouble();
         lon = in.readDouble();
+        weatherIcon = in.readString();
     }
 
     public static final Creator<WeatherInfo> CREATOR = new Creator<WeatherInfo>() {
@@ -37,12 +39,8 @@ public class WeatherInfo implements Parcelable {
         }
     };
 
-    public String conditions(HomeActivityState.PresentationValue presentation){
-        return condition + " " + presentation.convert(temperature);
-    }
-
     public String predictions(HomeActivityState.PresentationValue presentation){
-        return "Min: " + presentation.convert(minDay) + " Max: " + presentation.convert(maxDay);
+        return "Min: " + presentation.convert(minDay) + "° Max: " + presentation.convert(maxDay)+"°";
     }
 
     @Override
@@ -59,5 +57,6 @@ public class WeatherInfo implements Parcelable {
         parcel.writeDouble(maxDay);
         parcel.writeDouble(lat);
         parcel.writeDouble(lon);
+        parcel.writeString(weatherIcon);
     }
 }

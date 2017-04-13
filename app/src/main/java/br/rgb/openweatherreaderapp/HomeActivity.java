@@ -1,5 +1,6 @@
 package br.rgb.openweatherreaderapp;
 
+import android.graphics.PointF;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -61,9 +62,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityPrese
     }
 
     @Override
-    public void displayMapPerspective(ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues) {
+    public void displayMapPerspective(PointF userPos, ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_container, WeatherMapFragment.newInstance(data, viewPresentationValues));
+        ft.replace(R.id.frame_container, WeatherMapFragment.newInstance(userPos, data, viewPresentationValues));
         ft.commit();
     }
 

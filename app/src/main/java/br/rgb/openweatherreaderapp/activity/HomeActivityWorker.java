@@ -1,15 +1,14 @@
 package br.rgb.openweatherreaderapp.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.PointF;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +30,7 @@ import br.rgb.openweatherreaderapp.web.ServicesParser;
 
 public class HomeActivityWorker extends Fragment {
     private final ArrayList<WeatherInfo> currentData = new ArrayList<>();
+    private final PointF from = new PointF();
     private Listener<List<WeatherInfo>> onResultChangedListener;
 
     @Override
@@ -99,10 +99,12 @@ public class HomeActivityWorker extends Fragment {
     }
 
     private void requestListFrom(final Location loc){
+        from.set((float)loc.getLatitude(), (float)loc.getLongitude());
         RectD area = getArea(loc.getLatitude(), loc.getLongitude(), 50);//kilometers
         StringBuilder request = new StringBuilder("http://api.openweathermap.org/data/2.5/box/city?");
         request.append("bbox=").append(area.lbrt()).append(",10");//10 = zoom
         request.append("&APPID=fed6cff3fd63212bf1b16bef38e79390");
+        request.append("&lang=pt");
         WebRequestService.request(getActivity(), request.toString(), new ResultReceiver(new Handler()){
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
@@ -191,6 +193,10 @@ public class HomeActivityWorker extends Fragment {
 
     public void destroy() {
         stopLocationUpdates();
+    }
+
+    public PointF from() {
+        return from;
     }
 
     static class RectD {

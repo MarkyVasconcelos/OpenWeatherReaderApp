@@ -22,7 +22,9 @@ public class ServicesParser {
     private static WeatherInfo parseWeather(JSONObject obj) throws JSONException {
         WeatherInfo result = new WeatherInfo();
         result.cityName = obj.getString("name");
-        result.condition = obj.getJSONArray("weather").getJSONObject(0).getString("main");
+        JSONObject weather = obj.getJSONArray("weather").getJSONObject(0);
+        result.condition = weather.getString("description");
+        result.weatherIcon = weather.getString("icon");
 
         JSONObject coords = obj.getJSONObject("coord");
         result.lat = coords.getDouble("Lat");
