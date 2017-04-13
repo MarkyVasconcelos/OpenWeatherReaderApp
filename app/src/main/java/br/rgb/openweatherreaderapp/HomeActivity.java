@@ -1,6 +1,7 @@
 package br.rgb.openweatherreaderapp;
 
 import android.graphics.PointF;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -66,6 +67,12 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityPrese
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_container, WeatherMapFragment.newInstance(userPos, data, viewPresentationValues));
         ft.commit();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        getWorker().onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

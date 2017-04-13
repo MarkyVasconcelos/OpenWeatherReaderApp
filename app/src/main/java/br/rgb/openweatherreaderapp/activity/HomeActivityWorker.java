@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import br.rgb.openweatherreaderapp.LoadingActivity;
 import br.rgb.openweatherreaderapp.WebRequestService;
 import br.rgb.openweatherreaderapp.lang.Listener;
 import br.rgb.openweatherreaderapp.model.WeatherInfo;
@@ -80,6 +81,7 @@ public class HomeActivityWorker extends Fragment {
         qry.setCostAllowed(true);
         qry.setPowerRequirement(Criteria.POWER_LOW);
 
+        LoadingActivity.openFrom(getActivity());
         listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -131,6 +133,8 @@ public class HomeActivityWorker extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                LoadingActivity.closeFrom(getActivity());
             }
         });
     }
