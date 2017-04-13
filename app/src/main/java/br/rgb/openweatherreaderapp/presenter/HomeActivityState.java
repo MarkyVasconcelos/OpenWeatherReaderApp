@@ -61,7 +61,7 @@ public class HomeActivityState implements Parcelable {
         }, F {
             @Override
             public double convert(double temp) {
-                return temp * 1.8 + 32; // from: http://www.rapidtables.com/convert/temperature/how-celsius-to-fahrenheit.htm
+                return (int) (temp * 1.8 + 32); // from: http://www.rapidtables.com/convert/temperature/how-celsius-to-fahrenheit.htm
             }
         };
 

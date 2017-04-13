@@ -51,6 +51,14 @@ public class HomeActivityWorker extends Fragment {
         startLocationUpdates();
     }
 
+    private void stopLocationUpdates() {
+        if(!requesting)
+            return;
+
+        LocationManager manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        manager.removeUpdates(listener);
+    }
+    LocationListener listener;
     volatile boolean requesting = false;
     private void startLocationUpdates() {
         if(requesting)
@@ -71,7 +79,7 @@ public class HomeActivityWorker extends Fragment {
         qry.setCostAllowed(true);
         qry.setPowerRequirement(Criteria.POWER_LOW);
 
-        LocationListener listener = new LocationListener() {
+        listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 requestListFrom(location);
@@ -93,7 +101,7 @@ public class HomeActivityWorker extends Fragment {
     private void requestListFrom(final Location loc){
         RectD area = getArea(loc.getLatitude(), loc.getLongitude(), 50);//kilometers
         StringBuilder request = new StringBuilder("http://api.openweathermap.org/data/2.5/box/city?");
-        request.append("bbox=").append(area.lbrt()).append(",9");//9 = zoom
+        request.append("bbox=").append(area.lbrt()).append(",10");//10 = zoom
         request.append("&APPID=fed6cff3fd63212bf1b16bef38e79390");
         WebRequestService.request(getActivity(), request.toString(), new ResultReceiver(new Handler()){
             @Override
@@ -171,11 +179,18 @@ public class HomeActivityWorker extends Fragment {
         double lat_change = distance/111.2d;
         double lon_change = Math.abs(Math.cos(lat*(Math.PI/180)));
 
+        lat_change /= 2d;
+        lon_change /= 2d;
+
         return new RectD(lat - lat_change, lng - lon_change, lat + lat_change, lng + lon_change);
     }
 
     public ArrayList<WeatherInfo> data() {
         return currentData;
+    }
+
+    public void destroy() {
+        stopLocationUpdates();
     }
 
     static class RectD {

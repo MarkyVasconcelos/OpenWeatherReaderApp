@@ -63,7 +63,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityPrese
     @Override
     public void displayMapPerspective(ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_container, WeatherMapFragment.newInstance(data));
+        ft.replace(R.id.frame_container, WeatherMapFragment.newInstance(data, viewPresentationValues));
         ft.commit();
     }
 
@@ -102,5 +102,12 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityPrese
     @Override
     public Menu getMenu() {
         return mMenu;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+
+        getWorker().destroy();
     }
 }
