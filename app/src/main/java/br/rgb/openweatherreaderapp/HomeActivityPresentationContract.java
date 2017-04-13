@@ -13,7 +13,7 @@ import br.rgb.openweatherreaderapp.presenter.HomeActivityState;
 public interface HomeActivityPresentationContract {
     interface View {
         void displayMapPerspective(PointF userPos, ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues);
-        void displayListPerspective(ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues);
+        void displayListPerspective(PointF userPos, ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues);
         HomeActivityWorker getWorker();
         Menu getMenu();
     }

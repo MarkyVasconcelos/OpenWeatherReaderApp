@@ -1,6 +1,7 @@
 package br.rgb.openweatherreaderapp.frag;
 
 import android.content.Context;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import br.rgb.openweatherreaderapp.R;
@@ -23,11 +22,15 @@ import br.rgb.openweatherreaderapp.view.WeatherInfoView;
 public class WeatherListFragment extends Fragment {
     private static final String OBJECT_KEY = "object_key";
     private static final String PRESENTATION_KEY = "presentation_key";
+    private static final String FROM_X_KEY = "from_x_key";
+    private static final String FROM_Y_KEY = "from_y_key";
 
-    public static WeatherListFragment newInstance(ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues) {
+    public static WeatherListFragment newInstance(ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues, PointF from) {
         WeatherListFragment instance = new WeatherListFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(OBJECT_KEY, data);
+        args.putFloat(FROM_X_KEY, from.x);
+        args.putFloat(FROM_Y_KEY, from.y);
         args.putInt(PRESENTATION_KEY, viewPresentationValues.ordinal());
         instance.setArguments(args);
         return instance;
@@ -61,7 +64,8 @@ public class WeatherListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(WeatherInfoViewHolder holder, int position) {
-            ((WeatherInfoView)holder.itemView).setObject(data.get(position));
+            PointF from = new PointF(getArguments().getFloat(FROM_X_KEY), getArguments().getFloat(FROM_Y_KEY));
+            ((WeatherInfoView)holder.itemView).setObject(data.get(position), from);
         }
 
         @Override public int getItemCount() { return data.size(); }

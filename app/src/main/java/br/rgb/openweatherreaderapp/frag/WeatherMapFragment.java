@@ -43,6 +43,11 @@ public class WeatherMapFragment extends SupportMapFragment {
         return instance;
     }
 
+    @Override
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,8 +75,9 @@ public class WeatherMapFragment extends SupportMapFragment {
             @Override
             public View getInfoContents(Marker marker) {
                 HomeActivityState.PresentationValue presenter = HomeActivityState.PresentationValue.values()[getArguments().getInt(PRESENTATION_KEY)];
+                PointF from = new PointF(getArguments().getFloat(FROM_X_KEY), getArguments().getFloat(FROM_Y_KEY));
                 WeatherInfoView view = new WeatherInfoView(getContext(), presenter);
-                view.setObject(population.get(marker));
+                view.setObject(population.get(marker), from);
                 return view;
             }
         });

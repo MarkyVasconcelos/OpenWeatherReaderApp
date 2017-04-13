@@ -26,6 +26,7 @@ import java.util.List;
 import br.rgb.openweatherreaderapp.WebRequestService;
 import br.rgb.openweatherreaderapp.lang.Listener;
 import br.rgb.openweatherreaderapp.model.WeatherInfo;
+import br.rgb.openweatherreaderapp.util.GpsUtil;
 import br.rgb.openweatherreaderapp.web.ServicesParser;
 
 public class HomeActivityWorker extends Fragment {
@@ -121,8 +122,8 @@ public class HomeActivityWorker extends Fragment {
                     Collections.sort(currentData, new Comparator<WeatherInfo>() {
                         @Override
                         public int compare(WeatherInfo o1, WeatherInfo o2) {
-                            double d1 = calculateDistanceInKilometer(loc.getLatitude(), loc.getLongitude(), o1.lat, o1.lon);
-                            double d2 = calculateDistanceInKilometer(loc.getLatitude(), loc.getLongitude(), o2.lat, o2.lon);
+                            double d1 = GpsUtil.calculateDistanceInKilometer(loc.getLatitude(), loc.getLongitude(), o1.lat, o1.lon);
+                            double d2 = GpsUtil.calculateDistanceInKilometer(loc.getLatitude(), loc.getLongitude(), o2.lat, o2.lon);
                             return (int) (d1 - d2);
                         }
                     });
@@ -133,32 +134,6 @@ public class HomeActivityWorker extends Fragment {
             }
         });
     }
-
-    public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
-
-    /**
-     * From: http://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
-     * @param userLat
-     * @param userLng
-     * @param venueLat
-     * @param venueLng
-     * @return
-     */
-    public double calculateDistanceInKilometer(double userLat, double userLng,
-                                               double venueLat, double venueLng) {
-
-        double latDistance = Math.toRadians(userLat - venueLat);
-        double lngDistance = Math.toRadians(userLng - venueLng);
-
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(userLat)) * Math.cos(Math.toRadians(venueLat))
-                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        return AVERAGE_RADIUS_OF_EARTH_KM * c;
-    }
-
 
     public void setOnResultChangedListener(Listener<List<WeatherInfo>> onResultChangedListener) {
         this.onResultChangedListener = onResultChangedListener;

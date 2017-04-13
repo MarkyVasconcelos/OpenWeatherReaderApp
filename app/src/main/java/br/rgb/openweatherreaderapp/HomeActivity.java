@@ -69,9 +69,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityPrese
     }
 
     @Override
-    public void displayListPerspective(ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues) {
+    public void displayListPerspective(PointF userPos, ArrayList<WeatherInfo> data, HomeActivityState.PresentationValue viewPresentationValues) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_container, WeatherListFragment.newInstance(data, viewPresentationValues));
+        ft.replace(R.id.frame_container, WeatherListFragment.newInstance(data, viewPresentationValues, userPos));
         ft.commit();
     }
 

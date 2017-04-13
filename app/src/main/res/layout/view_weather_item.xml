@@ -21,6 +21,15 @@
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="85dp" />
+        
+        <TextView
+            android:id="@+id/tv_from"
+            android:layout_width="wrap_content"
+            android:textColor="#888888"
+            app:layout_constraintLeft_toRightOf="@+id/tv_city"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="85dp" />
 
         <ImageView
             android:id="@+id/iv_condition"

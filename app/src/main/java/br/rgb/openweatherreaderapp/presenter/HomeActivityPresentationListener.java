@@ -42,7 +42,7 @@ public class HomeActivityPresentationListener implements HomeActivityPresentatio
             return;
 
         if(state.viewPresentationData == HomeActivityState.VIEW_LIST)
-            view.displayListPerspective(worker.data(), state.viewPresentationValues);
+            view.displayListPerspective(worker.from(), worker.data(), state.viewPresentationValues);
         else
             view.displayMapPerspective(worker.from(), worker.data(), state.viewPresentationValues);
 
